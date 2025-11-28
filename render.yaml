@@ -10,8 +10,11 @@ services:
     env: docker
     plan: free
     buildCommand: ""
-    startCommand: sh -c "php artisan migrate --force && /init"
     envVars:
+      - key: AUTORUN_ENABLED
+        value: true
+      - key: AUTORUN_LARAVEL_MIGRATION
+        value: true
       - key: APP_KEY
         generateValue: true
       - key: APP_ENV
