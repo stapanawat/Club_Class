@@ -1,19 +1,23 @@
-FROM php:8.3-fpm
+FROM serversideup/php:8.2-fpm-nginx
 
-# ---- PHP Exts ----
-RUN apt-get update && apt-get install -y \
-    git curl libpng-dev libonig-dev libxml2-dev zip unzip \
-    && docker-php-ext-install pdo_mysql mbstring gd exif pcntl bcmath
+# Install Node.js and NPM
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
-# ---- Composer ----
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Switch to root to install dependencies and build assets
+USER root
 
-WORKDIR /var/www/html
-
-# เอาโค้ดเข้า image (สำหรับรัน artisan, composer ฯลฯ)
+# Copy project files
 COPY . /var/www/html
 
-# ติดตั้ง PHP dependencies
-RUN composer install
+# Install PHP dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-CMD ["php-fpm"]
+# Install Node dependencies and build assets
+RUN npm install && npm run build
+
+# Set permissions
+RUN chown -R webuser:webgroup /var/www/html
+
+# Switch back to webuser
+USER webuser

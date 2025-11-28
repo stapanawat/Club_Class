@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: exclusive-platform
+    env: docker
+    plan: free
+    buildCommand: docker build -t exclusive-platform .
+    startCommand: docker run -p 80:80 exclusive-platform
+    envVars:
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://exclusive-platform.onrender.com
+      - key: LOG_CHANNEL
+        value: stderr
