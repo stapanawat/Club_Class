@@ -1,0 +1,36 @@
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Laravel
+vendor
+storage/*.key
+storage/debugbar
+storage/logs
+bootstrap/cache/*.php
+
+# Environment files
+.env
+.env.*.local
+
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose.yml
+Dockerfile
+
+# System files
+*.zip
+*.tar
+*.tar.gz
+*.sql
+*.7z
+*.rar
+Thumbs.db
+.DS_Store
+
+# Build output
+public/build
