@@ -1,3 +1,9 @@
+databases:
+  - name: exclusive-platform-db
+    databaseName: exclusive_platform
+    user: exclusive_user
+    plan: free
+
 services:
   - type: web
     name: exclusive-platform
@@ -16,3 +22,25 @@ services:
         value: https://exclusive-platform.onrender.com
       - key: LOG_CHANNEL
         value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: exclusive-platform-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: exclusive-platform-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: exclusive-platform-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: exclusive-platform-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: exclusive-platform-db
+          property: password
