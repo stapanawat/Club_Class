@@ -17,7 +17,7 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 RUN npm install && npm run build
 
 # Set permissions
-RUN chown -R webuser:webgroup /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
-# Switch back to webuser
-USER webuser
+# Switch back to www-data
+USER www-data
