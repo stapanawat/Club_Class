@@ -36,12 +36,12 @@ class SocialLoginController extends Controller
         $user = User::firstOrCreate(
             ['email' => $email],
             [
-                'name'              => $googleUser->getName() ?? 'Google User',
-                'password'          => Hash::make(uniqid('google_', true)),
-                'role'              => 'user',
+                'name' => $googleUser->getName() ?? 'Google User',
+                'password' => Hash::make(uniqid('google_', true)),
+                'role' => 'user',
                 'membership_status' => 'visitor',
-                'provider'          => 'google',
-                'provider_id'       => $googleUser->getId(),
+                'provider' => 'google',
+                'provider_id' => $googleUser->getId(),
                 'email_verified_at' => now(),
             ]
         );
@@ -54,7 +54,7 @@ class SocialLoginController extends Controller
         $redirectPath = session('social_redirect', '/dashboard');
         session()->forget('social_redirect');
 
-        $frontend = env('FRONTEND_URL', 'http://localhost:8000');
+        $frontend = env('FRONTEND_URL', url('/'));
 
         $callbackUrl = $frontend
             . '/oauth/callback?token=' . urlencode($apiToken)
