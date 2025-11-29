@@ -217,19 +217,7 @@
                     </span>
                 </div>
 
-                {{-- Quill CSS & JS (CDN) --}}
-                <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-                <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-
-                {{-- Quill Editor Container --}}
-                <div
-                    class="rounded-xl border border-slate-700/50 bg-slate-950/30 overflow-hidden shadow-inner transition-all duration-300 focus-within:border-indigo-500/50 focus-within:ring-4 focus-within:ring-indigo-500/10 @error('body') border-red-500/50 @enderror">
-                    <div id="editor-container" class="h-[600px] text-slate-100 text-base">
-                        {!! old('body', $content->body ?? '') !!}
-                    </div>
-                </div>
-                @error('body')
-                    <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
+                <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
                 @enderror
 
                 {{-- Hidden Input for Form Submission --}}
@@ -472,25 +460,6 @@
     .ql-snow .ql-toolbar button:hover .ql-fill,
     .ql-snow .ql-toolbar button.ql-active .ql-fill,
     .ql-snow .ql-picker-label:hover .ql-fill,
-    .ql-snow .ql-picker-label.ql-active .ql-fill {
-        fill: #818cf8 !important;
-        /* indigo-400 */
-    }
-
-    .ql-snow .ql-toolbar button:hover,
-    .ql-snow .ql-toolbar button.ql-active {
-        background-color: rgba(129, 140, 248, 0.1) !important;
-        /* indigo-400 with opacity */
-        border-radius: 8px;
-    }
-
-    .ql-snow .ql-picker-options {
-        z-index: 100 !important;
-    }
-
-    .ql-snow .ql-formats {
-        margin-right: 12px !important;
-    }
 
     /* Editor Content */
     .ql-editor {
@@ -549,12 +518,12 @@
                         btn.disabled = true;
                         const originalText = btn.innerHTML;
                         btn.innerHTML = `
-                                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                            กำลังบันทึก...
-                                        `;
+                                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                กำลังบันทึก...
+                                            `;
                         btn.classList.add('opacity-75', 'cursor-not-allowed');
                     }
                 });
@@ -602,9 +571,9 @@
                     chip.dataset.type = type;
                     chip.dataset.value = value;
                     chip.innerHTML = `
-                                        <span>${label}</span>
-                                        <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
-                                    `;
+                                            <span>${label}</span>
+                                            <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
+                                        `;
                     chip.querySelector('button').addEventListener('click', () => {
                         if (type === 'existing') {
                             selectedExistingIds = selectedExistingIds.filter(id => String(id) !== String(value));
