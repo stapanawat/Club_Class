@@ -216,22 +216,6 @@
                         Rich Text Editor
                     </span>
                 </div>
-
-                {{-- Quill CSS & JS (CDN) --}}
-                <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-                <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-
-                {{-- Quill Editor Container --}}
-                <div
-                    class="rounded-xl border border-slate-700/50 bg-slate-950/30 overflow-hidden shadow-inner transition-all duration-300 focus-within:border-indigo-500/50 focus-within:ring-4 focus-within:ring-indigo-500/10 @error('body') border-red-500/50 @enderror">
-                    <div id="editor-container" class="h-[600px] text-slate-100 text-base">
-                        {!! old('body', $content->body ?? '') !!}
-                    </div>
-                </div>
-                @error('body')
-                    <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
-                @enderror
-
                 {{-- Hidden Input for Form Submission --}}
                 <input type="hidden" name="body" id="body-input">
             </div>
