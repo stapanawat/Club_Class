@@ -484,29 +484,7 @@
         border-radius: 8px;
     }
 
-    /* Pickers */
-    .ql-snow .ql-picker {
-        color: #94a3b8 !important;
-    }
-
-    .ql-snow .ql-picker-options {
-        background-color: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 0.75rem;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        padding: 0.5rem;
-    }
-
-    .ql-snow .ql-picker-item {
-        color: #cbd5e1 !important;
-        padding: 6px 12px;
-        border-radius: 4px;
-    }
-
-    .ql-snow .ql-picker-item:hover,
-    .ql-snow .ql-picker-item.ql-selected {
-        color: #818cf8 !important;
-        background-color: rgba(129, 140, 248, 0.1);
+    background-color: rgba(129, 140, 248, 0.1);
     }
 
     /* Editor Content */
@@ -566,12 +544,12 @@
                         btn.disabled = true;
                         const originalText = btn.innerHTML;
                         btn.innerHTML = `
-                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                กำลังบันทึก...
-                            `;
+                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    กำลังบันทึก...
+                                `;
                         btn.classList.add('opacity-75', 'cursor-not-allowed');
                     }
                 });
@@ -619,9 +597,9 @@
                     chip.dataset.type = type;
                     chip.dataset.value = value;
                     chip.innerHTML = `
-                            <span>${label}</span>
-                            <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
-                        `;
+                                <span>${label}</span>
+                                <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
+                            `;
                     chip.querySelector('button').addEventListener('click', () => {
                         if (type === 'existing') {
                             selectedExistingIds = selectedExistingIds.filter(id => String(id) !== String(value));
