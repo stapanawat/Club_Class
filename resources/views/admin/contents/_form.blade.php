@@ -420,38 +420,6 @@
         background: #334155;
         border-radius: 3px;
     }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-    }
-
-    /* Quill Dark Mode Premium Overrides */
-    .ql-toolbar.ql-snow {
-        border: none !important;
-        background-color: rgba(15, 23, 42, 0.5);
-        /* slate-900/50 */
-        color: #e2e8f0;
-        border-radius: 0.75rem 0.75rem 0 0;
-        padding: 12px 16px !important;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.5) !important;
-        /* slate-700/50 */
-        backdrop-filter: blur(8px);
-    }
-
-    .ql-container.ql-snow {
-        border: none !important;
-        background-color: rgba(2, 6, 23, 0.3);
-        /* slate-950/30 */
-        color: #f8fafc;
-        font-family: 'Kanit', sans-serif;
-        font-size: 1rem;
-        border-radius: 0 0 0.75rem 0.75rem;
-        min-height: 500px;
-    }
-
-    /* Icons & Buttons */
-    .ql-snow .ql-stroke {
-        stroke: #94a3b8 !important;
         transition: stroke 0.2s ease;
     }
 
