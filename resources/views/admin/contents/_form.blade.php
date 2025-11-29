@@ -484,7 +484,12 @@
         border-radius: 8px;
     }
 
-    background-color: rgba(129, 140, 248, 0.1);
+    .ql-snow .ql-picker-options {
+        z-index: 100 !important;
+    }
+
+    .ql-snow .ql-formats {
+        margin-right: 12px !important;
     }
 
     /* Editor Content */
@@ -544,12 +549,12 @@
                         btn.disabled = true;
                         const originalText = btn.innerHTML;
                         btn.innerHTML = `
-                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    กำลังบันทึก...
-                                `;
+                                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            กำลังบันทึก...
+                                        `;
                         btn.classList.add('opacity-75', 'cursor-not-allowed');
                     }
                 });
@@ -597,9 +602,9 @@
                     chip.dataset.type = type;
                     chip.dataset.value = value;
                     chip.innerHTML = `
-                                <span>${label}</span>
-                                <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
-                            `;
+                                        <span>${label}</span>
+                                        <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
+                                    `;
                     chip.querySelector('button').addEventListener('click', () => {
                         if (type === 'existing') {
                             selectedExistingIds = selectedExistingIds.filter(id => String(id) !== String(value));
@@ -742,6 +747,25 @@
             // =========================
             // QUILL EDITOR SETUP
             // =========================
+            if (document.getElementById('editor-container')) {
+                const quill = new Quill('#editor-container', {
+                    theme: 'snow',
+                    placeholder: 'เริ่มเขียนเนื้อหาของคุณที่นี่...',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['link', 'image', 'video'],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                // Sync content to hidden input on form submit
+                const editorContainer = document.getElementById('editor-container');
                 const form = editorContainer ? editorContainer.closest('form') : null;
                 const bodyInput = document.getElementById('body-input');
 
