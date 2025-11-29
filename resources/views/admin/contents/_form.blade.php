@@ -216,6 +216,22 @@
                         Rich Text Editor
                     </span>
                 </div>
+
+                {{-- Quill CSS & JS (CDN) --}}
+                <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+                <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+                {{-- Quill Editor Container --}}
+                <div
+                    class="rounded-xl border border-slate-700/50 bg-slate-950/30 overflow-hidden shadow-inner transition-all duration-300 focus-within:border-indigo-500/50 focus-within:ring-4 focus-within:ring-indigo-500/10 @error('body') border-red-500/50 @enderror">
+                    <div id="editor-container" class="h-[600px] text-slate-100 text-base">
+                        {!! old('body', $content->body ?? '') !!}
+                    </div>
+                </div>
+                @error('body')
+                    <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
+                @enderror
+
                 {{-- Hidden Input for Form Submission --}}
                 <input type="hidden" name="body" id="body-input">
             </div>
@@ -404,6 +420,38 @@
         background: #334155;
         border-radius: 3px;
     }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+    }
+
+    /* Quill Dark Mode Premium Overrides */
+    .ql-toolbar.ql-snow {
+        border: none !important;
+        background-color: rgba(15, 23, 42, 0.5);
+        /* slate-900/50 */
+        color: #e2e8f0;
+        border-radius: 0.75rem 0.75rem 0 0;
+        padding: 12px 16px !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.5) !important;
+        /* slate-700/50 */
+        backdrop-filter: blur(8px);
+    }
+
+    .ql-container.ql-snow {
+        border: none !important;
+        background-color: rgba(2, 6, 23, 0.3);
+        /* slate-950/30 */
+        color: #f8fafc;
+        font-family: 'Kanit', sans-serif;
+        font-size: 1rem;
+        border-radius: 0 0 0.75rem 0.75rem;
+        min-height: 500px;
+    }
+
+    /* Icons & Buttons */
+    .ql-snow .ql-stroke {
+        stroke: #94a3b8 !important;
         transition: stroke 0.2s ease;
     }
 
@@ -694,24 +742,6 @@
             // =========================
             // QUILL EDITOR SETUP
             // =========================
-            if (document.getElementById('editor-container')) {
-                const quill = new Quill('#editor-container', {
-                    theme: 'snow',
-                    placeholder: 'เริ่มเขียนเนื้อหาของคุณที่นี่...',
-                    modules: {
-                        toolbar: [
-                            [{ 'header': [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline', 'strike'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                            [{ 'color': [] }, { 'background': [] }],
-                            ['link', 'image', 'video'],
-                            ['clean']
-                        ]
-                    }
-                });
-
-                // Sync content to hidden input on form submit
-                const editorContainer = document.getElementById('editor-container');
                 const form = editorContainer ? editorContainer.closest('form') : null;
                 const bodyInput = document.getElementById('body-input');
 
