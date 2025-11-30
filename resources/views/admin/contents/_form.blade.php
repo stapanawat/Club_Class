@@ -385,16 +385,6 @@
                                 <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
-
-                        {{-- Video File Preview --}}
-                        <div id="video-file-preview-wrapper" class="hidden space-y-2">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                                ตัวอย่างไฟล์วิดีโอที่เลือก
-                            </p>
-                            <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shadow-lg">
-                                <video id="video-file-preview" controls class="w-full max-h-[400px] bg-black"></video>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -919,20 +909,40 @@
                     videoThumbImg.src = thumbUrl;
                     if (videoThumbWrapper) videoThumbWrapper.classList.remove('hidden');
                 } else {
-                    const youtubeSection = document.getElementById('video-source-youtube');
-                    const fileSection = document.getElementById('video-source-file');
+                    videoThumbImg.src = '';
+                    if (videoThumbWrapper) videoThumbWrapper.classList.add('hidden');
+                }
+            }
 
-                    radioButtons.forEach(radio => {
-                        radio.addEventListener('change', function () {
-                            if (this.value === 'youtube') {
-                                youtubeSection.classList.remove('hidden');
-                                fileSection.classList.add('hidden');
-                            } else {
-                                youtubeSection.classList.add('hidden');
-                                fileSection.classList.remove('hidden');
-                            }
-                        });
-                    });
+            if (videoUrlInput) {
+                videoUrlInput.addEventListener('change', updateYoutubeThumbPreview);
+                videoUrlInput.addEventListener('blur', updateYoutubeThumbPreview);
+                videoUrlInput.addEventListener('keyup', function () {
+                    // Debounce slightly if needed, but keyup is fine for immediate feedback
+                    updateYoutubeThumbPreview();
                 });
+                // Initial check
+                updateYoutubeThumbPreview();
+            }
+
+            // =========================
+            // TOGGLE VIDEO SOURCE
+            // =========================
+            const radioButtons = document.querySelectorAll('input[name="video_source"]');
+            const youtubeSection = document.getElementById('video-source-youtube');
+            const fileSection = document.getElementById('video-source-file');
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'youtube') {
+                        youtubeSection.classList.remove('hidden');
+                        fileSection.classList.add('hidden');
+                    } else {
+                        youtubeSection.classList.add('hidden');
+                        fileSection.classList.remove('hidden');
+                    }
+                });
+            });
+        });
     </script>
 @endpush
