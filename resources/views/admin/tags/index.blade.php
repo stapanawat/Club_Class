@@ -32,15 +32,7 @@
     </div>
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-sm font-semibold text-slate-100">รายการแท็ก</h3>
-        <a href="{{ route('admin.tags.create') }}"
-            class="group relative inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 px-5 py-2.5 text-xs font-bold text-slate-900 shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all duration-300 hover:shadow-[0_0_25px_rgba(245,158,11,0.5)] hover:-translate-y-0.5 hover:scale-105">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                class="w-4 h-4 transition-transform group-hover:rotate-90">
-                <path
-                    d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-            </svg>
-            สร้างแท็กใหม่
-        </a>
+
     </div>
 
     <div class="rounded-2xl border border-slate-800 bg-slate-900/80 overflow-hidden">

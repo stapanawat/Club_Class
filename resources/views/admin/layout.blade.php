@@ -73,10 +73,6 @@
                     หมวดหมู่ (Categories)
                 </a>
 
-                <a href="{{ route('admin.tags.index') }}" class="block rounded-xl px-3 py-2 hover:bg-slate-800/80
-                      {{ request()->routeIs('admin.tags.*') ? 'bg-slate-800/80 text-amber-300' : 'text-slate-300' }}">
-                    แท็ก (Tags)
-                </a>
 
                 <a href="{{ route('admin.members.index') }}"
                     class="block rounded-xl px-3 py-2 hover:bg-slate-800/80
@@ -136,7 +132,7 @@
             <main class="flex-1 px-4 py-6 md:px-6 md:py-8">
                 @if(session('status'))
                     <div class="mb-4 rounded-xl border border-emerald-500/40
-                                       bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                                           bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
                         {{ session('status') }}
                     </div>
                 @endif
