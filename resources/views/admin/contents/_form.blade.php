@@ -385,6 +385,16 @@
                                 <p class="mt-2 text-xs text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
+
+                        {{-- Video File Preview --}}
+                        <div id="video-file-preview-wrapper" class="hidden space-y-2">
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                                ตัวอย่างไฟล์วิดีโอที่เลือก
+                            </p>
+                            <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shadow-lg">
+                                <video id="video-file-preview" controls class="w-full max-h-[400px] bg-black"></video>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -620,12 +630,12 @@
                         btn.disabled = true;
                         const originalText = btn.innerHTML;
                         btn.innerHTML = `
-                                                                                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                                                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                                                                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                                                                    </svg>
-                                                                                                    กำลังบันทึก...
-                                                                                                `;
+                                                                                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                                                                        </svg>
+                                                                                                        กำลังบันทึก...
+                                                                                                    `;
                         btn.classList.add('opacity-75', 'cursor-not-allowed');
                     }
                 });
@@ -673,9 +683,9 @@
                     chip.dataset.type = type;
                     chip.dataset.value = value;
                     chip.innerHTML = `
-                                                                                                <span>${label}</span>
-                                                                                                <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
-                                                                                            `;
+                                                                                                    <span>${label}</span>
+                                                                                                    <button type="button" class="ml-1 text-slate-400 hover:text-red-400 transition-colors focus:outline-none">&times;</button>
+                                                                                                `;
                     chip.querySelector('button').addEventListener('click', () => {
                         if (type === 'existing') {
                             selectedExistingIds = selectedExistingIds.filter(id => String(id) !== String(value));
@@ -909,40 +919,20 @@
                     videoThumbImg.src = thumbUrl;
                     if (videoThumbWrapper) videoThumbWrapper.classList.remove('hidden');
                 } else {
-                    videoThumbImg.src = '';
-                    if (videoThumbWrapper) videoThumbWrapper.classList.add('hidden');
-                }
-            }
+                    const youtubeSection = document.getElementById('video-source-youtube');
+                    const fileSection = document.getElementById('video-source-file');
 
-            if (videoUrlInput) {
-                videoUrlInput.addEventListener('change', updateYoutubeThumbPreview);
-                videoUrlInput.addEventListener('blur', updateYoutubeThumbPreview);
-                videoUrlInput.addEventListener('keyup', function () {
-                    // Debounce slightly if needed, but keyup is fine for immediate feedback
-                    updateYoutubeThumbPreview();
+                    radioButtons.forEach(radio => {
+                        radio.addEventListener('change', function () {
+                            if (this.value === 'youtube') {
+                                youtubeSection.classList.remove('hidden');
+                                fileSection.classList.add('hidden');
+                            } else {
+                                youtubeSection.classList.add('hidden');
+                                fileSection.classList.remove('hidden');
+                            }
+                        });
+                    });
                 });
-                // Initial check
-                updateYoutubeThumbPreview();
-            }
-
-            // =========================
-            // TOGGLE VIDEO SOURCE
-            // =========================
-            const radioButtons = document.querySelectorAll('input[name="video_source"]');
-            const youtubeSection = document.getElementById('video-source-youtube');
-            const fileSection = document.getElementById('video-source-file');
-
-            radioButtons.forEach(radio => {
-                radio.addEventListener('change', function () {
-                    if (this.value === 'youtube') {
-                        youtubeSection.classList.remove('hidden');
-                        fileSection.classList.add('hidden');
-                    } else {
-                        youtubeSection.classList.add('hidden');
-                        fileSection.classList.remove('hidden');
-                    }
-                });
-            });
-        });
     </script>
 @endpush
