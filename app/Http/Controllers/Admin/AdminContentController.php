@@ -82,8 +82,21 @@ class AdminContentController extends Controller
 
         // Upload Thumbnail
         if ($request->hasFile('thumbnail_file')) {
-            $path = $request->file('thumbnail_file')->store('contents/thumbnails', 'public');
-            $data['thumbnail_url'] = '/storage/' . $path;
+            $file = $request->file('thumbnail_file');
+            if ($file->isValid()) {
+                $filename = 'thumb_' . time() . '_' . \Illuminate\Support\Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+                // Try storeAs first
+                $path = $file->storeAs('contents/thumbnails', $filename, 'public');
+
+                // Fallback if storeAs fails
+                if (!$path) {
+                    $path = 'contents/thumbnails/' . $filename;
+                    \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
+                }
+
+                $data['thumbnail_url'] = '/storage/' . $path;
+            }
         }
 
         // Upload Video File
@@ -91,6 +104,8 @@ class AdminContentController extends Controller
             $path = $request->file('video_file')->store('contents/videos', 'public');
             $data['video_url'] = '/storage/' . $path;
         }
+
+        \Illuminate\Support\Facades\Log::info('Final Data before Create:', $data);
 
         // แยก data ของ Content กับ data ของแท็กออกจากกัน
         $contentData = $data;
@@ -174,8 +189,27 @@ class AdminContentController extends Controller
 
         // Upload Thumbnail
         if ($request->hasFile('thumbnail_file')) {
-            $path = $request->file('thumbnail_file')->store('contents/thumbnails', 'public');
-            $data['thumbnail_url'] = '/storage/' . $path;
+            $file = $request->file('thumbnail_file');
+            if ($file->isValid()) {
+                // Delete old thumbnail if exists
+                if (!empty($content->thumbnail_url) && str_starts_with($content->thumbnail_url, '/storage/')) {
+                    $oldPath = str_replace('/storage/', '', $content->thumbnail_url);
+                    Storage::disk('public')->delete($oldPath);
+                }
+
+                $filename = 'thumb_' . time() . '_' . \Illuminate\Support\Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+                // Try storeAs first
+                $path = $file->storeAs('contents/thumbnails', $filename, 'public');
+
+                // Fallback if storeAs fails
+                if (!$path) {
+                    $path = 'contents/thumbnails/' . $filename;
+                    \Illuminate\Support\Facades\Storage::disk('public')->put($path, file_get_contents($file));
+                }
+
+                $data['thumbnail_url'] = '/storage/' . $path;
+            }
         }
 
         // Upload Video File

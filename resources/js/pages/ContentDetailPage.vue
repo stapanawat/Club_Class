@@ -82,14 +82,14 @@
             {{ content.title }}
           </h1>
 
-          <!-- Thumbnail (Cover Image) Removed to prevent duplication with Body content -->
-          <!-- <div v-if="content.thumbnail_url" class="mb-6 rounded-xl overflow-hidden border border-slate-800">
+          <!-- Thumbnail (Cover Image) -->
+          <div v-if="content.thumbnail_url" class="mb-6 rounded-xl overflow-hidden border border-slate-800">
             <img 
               :src="content.thumbnail_url" 
               :alt="content.title"
               class="w-full h-auto object-cover max-h-[500px]"
             />
-          </div> -->
+          </div>
 
           <!-- Meta -->
           <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400 mb-4">
