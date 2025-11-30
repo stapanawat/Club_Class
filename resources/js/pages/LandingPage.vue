@@ -108,6 +108,7 @@
   padding: 4rem 1.5rem;
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
 
 /* Background Animation */
