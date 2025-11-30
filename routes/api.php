@@ -27,6 +27,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('api.login');
 Route::get('/contents', [ContentApiController::class, 'index']);
 Route::get('/categories', [ContentApiController::class, 'getCategories']);
 Route::get('/tags', [ContentApiController::class, 'getTags']);
+Route::get('/contents/{slug}', [ContentApiController::class, 'showBySlug']);
 
 
 // =======================
@@ -49,8 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
     });
 
-    // Content Detail (ต้องล็อกอิน)
-    Route::get('/contents/{slug}', [ContentApiController::class, 'showBySlug']);
+
 
     Route::middleware('auth:sanctum')->post('/subscription/start', [SubscriptionController::class, 'start']);
 

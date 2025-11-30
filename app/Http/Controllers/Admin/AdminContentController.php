@@ -126,8 +126,14 @@ class AdminContentController extends Controller
                     continue;
                 }
 
+                // Fix: Str::slug() might return empty for Thai characters
+                $slug = Str::slug($tagName);
+                if (empty($slug)) {
+                    $slug = str_replace(' ', '-', $tagName);
+                }
+
                 $tag = Tag::firstOrCreate(
-                    ['slug' => Str::slug($tagName)],
+                    ['slug' => $slug],
                     ['name' => $tagName]
                 );
 
@@ -247,8 +253,14 @@ class AdminContentController extends Controller
                     continue;
                 }
 
+                // Fix: Str::slug() might return empty for Thai characters
+                $slug = Str::slug($tagName);
+                if (empty($slug)) {
+                    $slug = str_replace(' ', '-', $tagName);
+                }
+
                 $tag = Tag::firstOrCreate(
-                    ['slug' => Str::slug($tagName)],
+                    ['slug' => $slug],
                     ['name' => $tagName]
                 );
 

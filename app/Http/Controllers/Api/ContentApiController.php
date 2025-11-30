@@ -101,7 +101,8 @@ class ContentApiController extends Controller
     // ✅ detail สำหรับหน้า ContentDetailPage.vue
     public function showBySlug(Request $request, string $slug)
     {
-        $user = $request->user(); // safe เพราะผ่าน auth:sanctum แล้ว
+        // Allow optional auth (visitor or logged in user)
+        $user = Auth::guard('sanctum')->user();
         $membershipStatus = $user->membership_status ?? 'visitor';
         $canViewFull = $membershipStatus === 'active';
 
