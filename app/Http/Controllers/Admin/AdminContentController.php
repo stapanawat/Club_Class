@@ -66,7 +66,7 @@ class AdminContentController extends Controller
             'body' => 'nullable|string',
             'video_url' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'thumbnail_file' => 'nullable|image|max:2048',
+            'thumbnail_file' => 'required|image|max:2048',
             'video_file' => 'nullable|mimetypes:video/mp4,video/webm|max:51200',
 
             'tags' => 'array',

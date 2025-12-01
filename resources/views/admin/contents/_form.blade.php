@@ -1,4 +1,4 @@
-{{-- resources/views/admin/contents/_form.blade.php --}}
+﻿{{-- resources/views/admin/contents/_form.blade.php --}}
 @csrf
 
 {{-- QuillJS CDN --}}
@@ -152,7 +152,6 @@
                         ล้างทั้งหมด
                     </button>
                 </div>
-
                 <div class="relative w-full rounded-xl border border-slate-700/50 bg-slate-950/50 px-3 py-2 text-sm text-slate-100 shadow-inner transition-all duration-300 focus-within:border-amber-500/50 focus-within:bg-slate-900 focus-within:ring-4 focus-within:ring-amber-500/10"
                     data-tag-selector data-all-tags='@json($tags->map(fn($t) => ["id" => $t->id, "name" => $t->name]))'
                     data-selected-tags='@json(old("tags", $selectedTags ?? []))'
@@ -248,7 +247,7 @@
                     <div class="flex items-center justify-between mb-2">
                         <label
                             class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 group-focus-within:text-emerald-400 transition-colors">
-                            รูปหน้าปก (Thumbnail)
+                            รูปหน้าปก (Thumbnail) <span class="text-red-500">*</span>
                         </label>
                         <span class="text-[10px] text-slate-500">16:9 (1280x720)</span>
                     </div>
@@ -347,7 +346,7 @@
                         <div id="video-source-file"
                             class="space-y-3 {{ old('video_source', $content->video_url && str_starts_with($content->video_url, '/storage') ? 'file' : '') === 'file' ? '' : 'hidden' }}">
 
-                            <div
+                            <div id="video-upload-container"
                                 class="relative w-full rounded-xl border-2 border-dashed border-slate-700/50 bg-slate-950/30 p-6 text-center hover:bg-slate-900/50 transition-colors group-focus-within:border-emerald-500/50">
                                 <div class="flex flex-col items-center justify-center pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -357,6 +356,7 @@
                                     </svg>
                                     <span class="text-xs text-slate-400">คลิกเพื่อเลือกไฟล์วิดีโอ</span>
                                     <span class="text-[10px] text-slate-600 mt-1">MP4, WebM (Max 50MB)</span>
+                                    <p id="video-filename-display" class="mt-2 text-sm text-emerald-400 hidden font-medium animate-pulse"></p>
                                 </div>
                                 <input type="file" name="video_file" id="video-file-input" accept="video/mp4,video/webm"
                                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
@@ -943,6 +943,36 @@
                     }
                 });
             });
+
+            // =========================
+            // VIDEO FILE SELECTION FEEDBACK
+            // =========================
+            const videoFileInput = document.getElementById('video-file-input');
+            const videoUploadContainer = document.getElementById('video-upload-container');
+            const videoFilenameDisplay = document.getElementById('video-filename-display');
+
+            if (videoFileInput && videoUploadContainer && videoFilenameDisplay) {
+                videoFileInput.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        const file = this.files[0];
+                        // Show filename
+                        videoFilenameDisplay.textContent = file.name;
+                        videoFilenameDisplay.classList.remove('hidden');
+
+                        // Change border to red as requested (using emerald for success/active state usually, but user asked for red frame?)
+                        // User said "กรอบสีแดง" (Red frame). I will follow instruction.
+                        videoUploadContainer.classList.remove('border-slate-700/50');
+                        videoUploadContainer.classList.add('border-red-500', 'bg-red-500/10');
+                    } else {
+                        // Reset
+                        videoFilenameDisplay.textContent = '';
+                        videoFilenameDisplay.classList.add('hidden');
+
+                        videoUploadContainer.classList.add('border-slate-700/50');
+                        videoUploadContainer.classList.remove('border-red-500', 'bg-red-500/10');
+                    }
+                });
+            }
         });
     </script>
 @endpush
